@@ -9,10 +9,6 @@ class SplashScreen : public QSplashScreen
     Q_OBJECT
 public:
     explicit SplashScreen(QWidget *parent = nullptr);
-
-signals:
-
-public slots:
 };
 
 #endif // SPLASHSCREEN_H

@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    splashscreen.cpp
+    splashscreen.cpp \
+    systray.cpp
 
 HEADERS += \
-    splashscreen.h
+    splashscreen.h \
+    systray.h
 
 RESOURCES += \
     icons/resources.qrc

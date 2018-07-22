@@ -1,10 +1,12 @@
 #include <QApplication>
-#include "splashscreen.h"
+#include "systray.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    SplashScreen w;
-    w.show();
+
+    SysTray sysTray;
+//    sysTray.show();
+
     return app.exec();
 }
