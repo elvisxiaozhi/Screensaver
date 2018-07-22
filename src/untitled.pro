@@ -34,3 +34,5 @@ HEADERS += \
 
 RESOURCES += \
     icons/resources.qrc
+
+RC_ICONS += test.ico

@@ -4,7 +4,9 @@
 #include <QWidget>
 #include <QSystemTrayIcon>
 #include "splashscreen.h"
-#include <QTimer>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 class SysTray : public QWidget
 {
@@ -15,17 +17,14 @@ public:
 
 private:
     QSystemTrayIcon *sysTray;
-    SplashScreen *splashScreen;
-    QTimer *timer;
-    QRect screenSize;
-    int posX;
-    int posY;
+    QVector<SplashScreen *> splashVec;
+    QLineEdit *lineEdit;
+    QPushButton *btn;
+    QVBoxLayout *vLayout;
 
+    void createWindowLayout();
     void createSysTray();
-    void createSplashScr();
-
-private slots:
-    void whenTimeout();
+    void createSplashScr(int);
 };
 
 #endif // SYSTRAY_H

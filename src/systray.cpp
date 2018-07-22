@@ -1,26 +1,47 @@
 #include "systray.h"
 #include <QMenu>
 #include <QDebug>
-#include <QApplication>
-#include <QDesktopWidget>
+#include <QHBoxLayout>
+#include <QLabel>
 
 SysTray::SysTray(QWidget *parent) : QWidget(parent)
 {
-    posX = 100;
-    posY = 100;
-    screenSize.setRect(0, 0, QApplication::desktop()->screenGeometry().width() - 80, QApplication::desktop()->screenGeometry().height() - 120);
-
+    createWindowLayout();
     createSysTray();
-    createSplashScr();
-
-    timer = new QTimer(this);
-    timer->start(20);
-    connect(timer, &QTimer::timeout, this, &SysTray::whenTimeout);
 }
 
 SysTray::~SysTray()
 {
-    delete splashScreen;
+    for(int i = 0; i < splashVec.size(); ++i) {
+        delete splashVec[i];
+    }
+}
+
+void SysTray::createWindowLayout()
+{
+    vLayout = new QVBoxLayout(this);
+
+    QLabel *lbl = new QLabel(this);
+    lbl->setText(tr("你想生成多少张笑脸？"));
+
+    lineEdit = new QLineEdit(this);
+
+    QHBoxLayout *hLayout = new QHBoxLayout();
+    hLayout->addWidget(lineEdit, Qt::AlignCenter);
+
+    btn = new QPushButton(this);
+    btn->setText(tr("确定"));
+    QHBoxLayout *btnHLayout = new QHBoxLayout();
+    btnHLayout->addStretch();
+    btnHLayout->addWidget(btn);
+
+    vLayout->addWidget(lbl);
+    vLayout->addLayout(hLayout);
+    vLayout->addLayout(btnHLayout);
+
+    setLayout(vLayout);
+
+    connect(btn, &QPushButton::clicked, [this](){ createSplashScr(lineEdit->text().toInt()); this->hide(); });
 }
 
 void SysTray::createSysTray()
@@ -38,23 +59,11 @@ void SysTray::createSysTray()
     connect(quitAct, &QAction::triggered, [this](){ this->close(); });
 }
 
-void SysTray::createSplashScr()
+void SysTray::createSplashScr(int num)
 {
-    splashScreen = new SplashScreen();
-    splashScreen->move(QPoint(posX, posY));
-    splashScreen->show();
-}
-
-void SysTray::whenTimeout()
-{
-    if(screenSize.contains(posX, posY)) {
-        posX += 5;
-        posY += 3;
-        splashScreen->move(posX, posY);
-    }
-    else {
-        qDebug() << "No";
-        timer->stop();
-        qDebug() << posY << posX;
+    for(int i = 0; i < num; ++i) {
+        SplashScreen *splashScreen = new SplashScreen();
+        splashScreen->show();
+        splashVec.push_back(splashScreen);
     }
 }
