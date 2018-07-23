@@ -22,29 +22,17 @@ SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
 
 void SplashScreen::whenTimeout()
 {
-//    while(!screenSize.contains(startPosX += movePosX, startPosY += movePosY)) {
-//        generatePos();
-//        startPosX -= movePosX;
-//        startPosY -= movePosY;
-//    }
-    if(!screenSize.contains(startPosX, startPosY)) {
-        while(true) {
-            generatePos();
-            startPosX += movePosX;
-            startPosY += movePosY;
-            if(screenSize.contains(startPosX, startPosY)) {
-                break;
-            }
-            else {
-                startPosX -= movePosX;
-                startPosY -= movePosY;
-            }
-        }
-    }
-    else {
+    while(!screenSize.contains(startPosX, startPosY)) {
+        generatePos();
         startPosX += movePosX;
         startPosY += movePosY;
+        if(!screenSize.contains(startPosX, startPosY)) {
+            startPosX -= movePosX;
+            startPosY -= movePosY;
+        }
     }
+    startPosX += movePosX;
+    startPosY += movePosY;
     move(startPosX, startPosY);
 }
 

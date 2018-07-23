@@ -1,1 +1,1 @@
-# screensaver
+# Just a funny screensaver
