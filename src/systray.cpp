@@ -60,5 +60,14 @@ void SysTray::createSplashScr(int num)
     for(int i = 0; i < num; ++i) {
         SplashScreen *splashScreen = new SplashScreen(this);
         splashVec.push_back(splashScreen);
+
+        connect(splashScreen, &SplashScreen::reachingBorder, this, &SysTray::clone);
     }
+}
+
+void SysTray::clone(int posX, int posY)
+{
+    SplashScreen *splashScreen = new SplashScreen(this, posX, posY);
+    splashVec.push_back(splashScreen);
+    connect(splashScreen, &SplashScreen::reachingBorder, this, &SysTray::clone);
 }

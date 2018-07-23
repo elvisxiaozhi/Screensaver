@@ -25,6 +25,9 @@ private:
     void createWindowLayout();
     void createSysTray();
     void createSplashScr(int);
+
+private slots:
+    void clone(int, int);
 };
 
 #endif // SYSTRAY_H

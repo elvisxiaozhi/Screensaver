@@ -5,26 +5,35 @@
 
 SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
 {
-    QPixmap pixmap(":/icons/comicFace.png");
-    setPixmap(pixmap);
-
     startPosX = geometry().center().x();
     startPosY = geometry().center().y();
 
+    setSplashScreen();
     generatePos();
+}
 
-    screenSize.setRect(0, 0, QApplication::desktop()->screenGeometry().width() - 80, QApplication::desktop()->screenGeometry().height() - 120);
+SplashScreen::SplashScreen(QWidget *parent, int posX, int posY) : QSplashScreen(parent)
+{
+    startPosX = posX;
+    startPosY = posY;
 
-    timer = new QTimer(this);
-    timer->start(10);
-    connect(timer, &QTimer::timeout, this, &SplashScreen::whenTimeout);
-
-    this->show();
+    setSplashScreen();
+    while(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
+        generatePos();
+    }
+    startPosX += movePosX;
+    startPosY += movePosY;
+    move(startPosX, startPosY);
 }
 
 void SplashScreen::whenTimeout()
 {
-    bounceBack();
+    if(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
+        emit reachingBorder(startPosX + movePosX, startPosY + movePosY);
+    }
+    while(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
+        generatePos();
+    }
     startPosX += movePosX;
     startPosY += movePosY;
     move(startPosX, startPosY);
@@ -39,15 +48,16 @@ void SplashScreen::generatePos()
     }
 }
 
-void SplashScreen::bounceBack()
+void SplashScreen::setSplashScreen()
 {
-    while(!screenSize.contains(startPosX, startPosY)) {
-        generatePos();
-        startPosX += movePosX;
-        startPosY += movePosY;
-        if(!screenSize.contains(startPosX, startPosY)) {
-            startPosX -= movePosX;
-            startPosY -= movePosY;
-        }
-    }
+    QPixmap pixmap(":/icons/comicFace.png");
+    setPixmap(pixmap);
+
+    screenSize.setRect(0, 0, QApplication::desktop()->screenGeometry().width() - 80, QApplication::desktop()->screenGeometry().height() - 120);
+
+    timer = new QTimer(this);
+    timer->start(10);
+    connect(timer, &QTimer::timeout, this, &SplashScreen::whenTimeout);
+
+    this->show();
 }

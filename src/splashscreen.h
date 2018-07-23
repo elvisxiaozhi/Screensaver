@@ -10,8 +10,7 @@ class SplashScreen : public QSplashScreen
     Q_OBJECT
 public:
     explicit SplashScreen(QWidget *parent = nullptr);
-
-    void bounceBack();
+    SplashScreen(QWidget *parent, int, int);
 
 private:
     int startPosX, startPosY;
@@ -21,6 +20,10 @@ private:
 
     void whenTimeout();
     void generatePos();
+    void setSplashScreen();
+
+signals:
+    void reachingBorder(int, int);
 };
 
 #endif // SPLASHSCREEN_H
