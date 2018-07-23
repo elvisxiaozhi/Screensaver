@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file>smile.png</file>
+        <file>comicFace.png</file>
     </qresource>
 </RCC>

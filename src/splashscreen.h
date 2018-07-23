@@ -11,6 +11,8 @@ class SplashScreen : public QSplashScreen
 public:
     explicit SplashScreen(QWidget *parent = nullptr);
 
+    void bounceBack();
+
 private:
     int startPosX, startPosY;
     int movePosX, movePosY;

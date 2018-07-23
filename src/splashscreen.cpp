@@ -5,7 +5,7 @@
 
 SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
 {
-    QPixmap pixmap(":/icons/smile.png");
+    QPixmap pixmap(":/icons/comicFace.png");
     setPixmap(pixmap);
 
     startPosX = geometry().center().x();
@@ -18,19 +18,13 @@ SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
     timer = new QTimer(this);
     timer->start(10);
     connect(timer, &QTimer::timeout, this, &SplashScreen::whenTimeout);
+
+    this->show();
 }
 
 void SplashScreen::whenTimeout()
 {
-    while(!screenSize.contains(startPosX, startPosY)) {
-        generatePos();
-        startPosX += movePosX;
-        startPosY += movePosY;
-        if(!screenSize.contains(startPosX, startPosY)) {
-            startPosX -= movePosX;
-            startPosY -= movePosY;
-        }
-    }
+    bounceBack();
     startPosX += movePosX;
     startPosY += movePosY;
     move(startPosX, startPosY);
@@ -42,5 +36,18 @@ void SplashScreen::generatePos()
     while(movePosX == 0 && movePosY == 0) {
         movePosX = rand() % 11 - 5;
         movePosY = rand() % 11 - 5;
+    }
+}
+
+void SplashScreen::bounceBack()
+{
+    while(!screenSize.contains(startPosX, startPosY)) {
+        generatePos();
+        startPosX += movePosX;
+        startPosY += movePosY;
+        if(!screenSize.contains(startPosX, startPosY)) {
+            startPosX -= movePosX;
+            startPosY -= movePosY;
+        }
     }
 }

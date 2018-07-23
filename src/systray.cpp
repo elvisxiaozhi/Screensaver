@@ -12,9 +12,6 @@ SysTray::SysTray(QWidget *parent) : QWidget(parent)
 
 SysTray::~SysTray()
 {
-    for(int i = 0; i < splashVec.size(); ++i) {
-        delete splashVec[i];
-    }
 }
 
 void SysTray::createWindowLayout()
@@ -61,8 +58,7 @@ void SysTray::createSysTray()
 void SysTray::createSplashScr(int num)
 {
     for(int i = 0; i < num; ++i) {
-        SplashScreen *splashScreen = new SplashScreen();
-        splashScreen->show();
+        SplashScreen *splashScreen = new SplashScreen(this);
         splashVec.push_back(splashScreen);
     }
 }
