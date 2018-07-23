@@ -18,12 +18,7 @@ SplashScreen::SplashScreen(QWidget *parent, int posX, int posY) : QSplashScreen(
     startPosY = posY;
 
     setSplashScreen();
-    while(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
-        generatePos();
-    }
-    startPosX += movePosX;
-    startPosY += movePosY;
-    move(startPosX, startPosY);
+    moveSplashScreen();
 }
 
 void SplashScreen::whenTimeout()
@@ -31,12 +26,8 @@ void SplashScreen::whenTimeout()
     if(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
         emit reachingBorder(startPosX + movePosX, startPosY + movePosY);
     }
-    while(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
-        generatePos();
-    }
-    startPosX += movePosX;
-    startPosY += movePosY;
-    move(startPosX, startPosY);
+
+    moveSplashScreen();
 }
 
 void SplashScreen::generatePos()
@@ -60,4 +51,14 @@ void SplashScreen::setSplashScreen()
     connect(timer, &QTimer::timeout, this, &SplashScreen::whenTimeout);
 
     this->show();
+}
+
+void SplashScreen::moveSplashScreen()
+{
+    while(!screenSize.contains(startPosX + movePosX, startPosY + movePosY)) {
+        generatePos();
+    }
+    startPosX += movePosX;
+    startPosY += movePosY;
+    move(startPosX, startPosY);
 }

@@ -21,6 +21,7 @@ private:
     void whenTimeout();
     void generatePos();
     void setSplashScreen();
+    void moveSplashScreen();
 
 signals:
     void reachingBorder(int, int);
