@@ -18,6 +18,7 @@ private:
     QRect screenSize;
 
     void whenTimeout();
+    void generatePos();
 };
 
 #endif // SPLASHSCREEN_H

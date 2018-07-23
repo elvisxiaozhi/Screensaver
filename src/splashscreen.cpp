@@ -11,8 +11,7 @@ SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
     startPosX = geometry().center().x();
     startPosY = geometry().center().y();
 
-    movePosX = rand() % 11 - 5;
-    movePosY = rand() % 11 - 5;
+    generatePos();
 
     screenSize.setRect(0, 0, QApplication::desktop()->screenGeometry().width() - 80, QApplication::desktop()->screenGeometry().height() - 120);
 
@@ -23,11 +22,37 @@ SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
 
 void SplashScreen::whenTimeout()
 {
-    while(!screenSize.contains(startPosX += movePosX, startPosY += movePosY)) {
+//    while(!screenSize.contains(startPosX += movePosX, startPosY += movePosY)) {
+//        generatePos();
+//        startPosX -= movePosX;
+//        startPosY -= movePosY;
+//    }
+    if(!screenSize.contains(startPosX, startPosY)) {
+        while(true) {
+            generatePos();
+            startPosX += movePosX;
+            startPosY += movePosY;
+            if(screenSize.contains(startPosX, startPosY)) {
+                break;
+            }
+            else {
+                startPosX -= movePosX;
+                startPosY -= movePosY;
+            }
+        }
+    }
+    else {
+        startPosX += movePosX;
+        startPosY += movePosY;
+    }
+    move(startPosX, startPosY);
+}
+
+void SplashScreen::generatePos()
+{
+    movePosX = 0, movePosY = 0;
+    while(movePosX == 0 && movePosY == 0) {
         movePosX = rand() % 11 - 5;
         movePosY = rand() % 11 - 5;
     }
-    startPosX += movePosX;
-    startPosY += movePosY;
-    move(startPosX, startPosY);
 }

@@ -40,7 +40,7 @@ void SysTray::createWindowLayout()
 
     setLayout(vLayout);
 
-    connect(btn, &QPushButton::clicked, [this](){ createSplashScr(lineEdit->text().toInt()); this->hide(); });
+    connect(btn, &QPushButton::clicked, [this](){ createSplashScr(lineEdit->text().toInt()); /*this->hide();*/ });
 }
 
 void SysTray::createSysTray()
