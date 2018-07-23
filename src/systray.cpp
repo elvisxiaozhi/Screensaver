@@ -19,25 +19,24 @@ SysTray::~SysTray()
 
 void SysTray::createWindowLayout()
 {
+    setWindowTitle("Screensaver");
+
     vLayout = new QVBoxLayout(this);
 
     QLabel *lbl = new QLabel(this);
-    lbl->setText(tr("你想生成多少张笑脸？"));
+    lbl->setText(tr("How many face do you want to generate?"));
 
     lineEdit = new QLineEdit(this);
 
-    QHBoxLayout *hLayout = new QHBoxLayout();
-    hLayout->addWidget(lineEdit, Qt::AlignCenter);
-
     btn = new QPushButton(this);
-    btn->setText(tr("确定"));
-    QHBoxLayout *btnHLayout = new QHBoxLayout();
-    btnHLayout->addStretch();
-    btnHLayout->addWidget(btn);
+    btn->setText(tr("OK"));
+    QHBoxLayout *hLayout = new QHBoxLayout();
+    hLayout->addStretch();
+    hLayout->addWidget(btn);
 
     vLayout->addWidget(lbl);
+    vLayout->addWidget(lineEdit);
     vLayout->addLayout(hLayout);
-    vLayout->addLayout(btnHLayout);
 
     setLayout(vLayout);
 
@@ -46,7 +45,7 @@ void SysTray::createWindowLayout()
 
 void SysTray::createSysTray()
 {
-    sysTray = new QSystemTrayIcon(QIcon(":/icons/test.png"), this);
+    sysTray = new QSystemTrayIcon(QIcon(":/icons/smile.png"), this);
     sysTray->show();
 
     QMenu *menu = new QMenu(this);

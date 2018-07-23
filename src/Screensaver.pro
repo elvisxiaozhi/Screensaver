@@ -32,7 +32,7 @@ HEADERS += \
     splashscreen.h \
     systray.h
 
+RC_ICONS += icons/smile.ico
+
 RESOURCES += \
     icons/resources.qrc
-
-RC_ICONS += test.ico

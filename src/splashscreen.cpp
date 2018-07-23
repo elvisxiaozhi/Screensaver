@@ -5,7 +5,7 @@
 
 SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent)
 {
-    QPixmap pixmap(":/icons/test.png");
+    QPixmap pixmap(":/icons/smile.png");
     setPixmap(pixmap);
 
     startPosX = geometry().center().x();
